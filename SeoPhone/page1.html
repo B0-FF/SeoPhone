@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeoPhone Locator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://i.pinimg.com/736x/6b/bd/a5/6bbda5dab39f0cbcd23a516a706a81bb.jpg'); /* استبدل هذا الرابط برابط الصورة الخاص بك */
+            background-size: cover;  /* لجعل الصورة تغطي كامل الخلفية */
+            background-position: center; /* لضبط الصورة في المنتصف */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white; /* لتغيير لون النصوص لتناسب الخلفية */
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.8); /* جعل الخلفية شبه شفافة لتظهر الصورة خلفها */
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 20px 0;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #5e72e4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #4353e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SeoPhone Locator</h1>
+        <p>أدخل رقم هاتفك:</p>
+        <input type="text" id="phoneNumber" placeholder="أدخل رقم الهاتف هنا">
+        <button onclick="sendPhoneNumber()">Start</button>
+    </div>
+
+    <script>
+        function sendPhoneNumber() {
+            const phoneNumber = document.getElementById('phoneNumber').value.trim();
+
+            // تحقق من أن الرقم المدخل يحتوي على أرقام فقط
+            const phoneRegex = /^[0-9]{10,15}$/;  // يمكنك تعديل عدد الأرقام حسب حاجتك
+            if (phoneNumber === "") {
+                alert("يرجى إدخال رقم الهاتف.");
+                return;
+            } else if (!phoneRegex.test(phoneNumber)) {
+                alert("الرقم غير صالح، يرجى إدخال رقم هاتف صحيح.");
+                return;
+            }
+
+            // هنا تقوم بتحويل المستخدم إلى صفحة info.html
+            window.location.href = "info.html";  // التوجيه إلى الملف info.html
+        }
+    </script>
+</body>
+</html>

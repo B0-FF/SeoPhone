@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Target Info</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            text-align: center;
+            padding: 30px;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .info {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>your information</h1>
+
+    <div class="container">
+        <div class="info">
+            <p><strong>الإحداثياث :</strong></p>
+            <p id="coordinates">-</p>
+        </div>
+
+        <div class="info">
+            <p><strong>عنوان IP :</strong></p>
+            <p id="ip">-</p>
+        </div>
+    </div>
+
+    <script>
+        // نطاق الإحداثيات داخل المغرب
+        const latMin = 27.0, latMax = 36.0;
+        const lonMin = -14.0, lonMax = -1.0;
+
+        // دالة لتوليد إحداثيات عشوائية داخل المغرب
+        function generateRandomCoordinates() {
+            const lat = (Math.random() * (latMax - latMin) + latMin).toFixed(6);
+            const lon = (Math.random() * (lonMax - lonMin) + lonMin).toFixed(6);
+            return { lat, lon };
+        }
+
+        // دالة لتوليد عنوان IP عشوائي داخل المغرب
+        function generateRandomIP() {
+            const ip = `41.${Math.floor(Math.random() * 128)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`;
+            return ip;
+        }
+
+        // دالة لتوليد الإحداثيات و IP عشوائي وتحديث العناصر في الصفحة
+        function generateRandomData() {
+            const coordinates = generateRandomCoordinates();
+            const ip = generateRandomIP();
+
+            document.getElementById('coordinates').textContent = `خط العرض: ${coordinates.lat}، خط الطول: ${coordinates.lon}`;
+            document.getElementById('ip').textContent = ip;
+        }
+
+        // توليد البيانات العشوائية عند تحميل الصفحة
+        window.onload = function() {
+            generateRandomData();
+        };
+    </script>
+
+</body>
+</html>

